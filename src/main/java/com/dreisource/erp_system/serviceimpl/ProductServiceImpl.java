@@ -1,4 +1,5 @@
-package com.dreisource.erp_system.service.impl;
+package com.dreisource.erp_system.serviceimpl;
+
 
 import com.dreisource.erp_system.model.Product;
 import com.dreisource.erp_system.repository.ProductRepository;
