@@ -13,10 +13,10 @@
     </parent>
 
     <groupId>com.example</groupId>
-    <artifactId>login</artifactId>
+    <artifactId>erp-system</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>login</name>
-    <description>Spring Boot Login System</description>
+    <name>erp-system</name>
+    <description>Spring Boot ERP System with Authentication</description>
 
     <properties>
         <java.version>17</java.version>
@@ -46,14 +46,14 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Lombok (for reducing boilerplate code) -->
+        <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
 
-        <!-- Development Tools -->
+        <!-- Dev Tools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -68,7 +68,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- JWT Dependencies (For Token Handling) -->
+        <!-- JWT Dependencies (Optional, if needed) -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -111,7 +111,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-
         </plugins>
     </build>
 

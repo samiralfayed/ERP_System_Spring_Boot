@@ -5,12 +5,11 @@ import com.dreisource.erp_system.model.Product;
 import com.dreisource.erp_system.repository.ProductRepository;
 import com.dreisource.erp_system.service.ProductService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductServiceImpl implements ProductService {
+public class ProductServiceImpl implements ProductService{
 
     private final ProductRepository productRepository;
 
@@ -30,7 +29,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getProductById(Long id) {
-        return productRepository.findById(id).orElse(null);
+        Optional<Product> product = productRepository.findById(id);
+        return product.orElse(null);
     }
 
     @Override
