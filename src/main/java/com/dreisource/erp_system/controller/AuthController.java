@@ -1,35 +1,32 @@
 package com.dreisource.erp_system.controller;
 
+
+import com.dreisource.erp_system.model.Role;
 import com.dreisource.erp_system.model.User;
-import com.dreisource.erp_system.service.AuthService;
-import org.springframework.http.ResponseEntity;
+import com.dreisource.erp_system.repository.UserRepository;
+import com.dreisource.erp_system.security.JwtTokenUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 public class AuthController {
 
-    private final AuthService authService;
-
-    public AuthController(AuthService authService) {
-        this.authService = authService;
-    }
+    @Autowired private UserRepository userRepository;
+    @Autowired private PasswordEncoder passwordEncoder;
+    @Autowired private JwtTokenUtil jwtTokenUtil;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody User user) {
-        User registeredUser = authService.registerUser(user);
-        return ResponseEntity.ok("User registered successfully: " + registeredUser.getUsername());
+    public String register(@RequestBody User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(Role.USER);
+        userRepository.save(user);
+        return "User registered successfully";
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user) {
-        String result = authService.loginUser(user.getUsername(), user.getPassword());
-        return ResponseEntity.ok(result);
-    }
-
-    @PostMapping("/logout")
-    public ResponseEntity<String> logout(@RequestBody User user) {
-        String result = authService.logoutUser(user.getUsername());
-        return ResponseEntity.ok(result);
+    public String login(@RequestParam String username, @RequestParam String password) {
+        return jwtTokenUtil.generateToken(username);
     }
 }

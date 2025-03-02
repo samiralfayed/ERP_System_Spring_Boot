@@ -1,44 +1,44 @@
 package com.dreisource.erp_system.controller;
 
 import com.dreisource.erp_system.model.Product;
-import com.dreisource.erp_system.service.ProductService;
+import com.dreisource.erp_system.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/products")
 public class ProductController {
 
-    private final ProductService productService;
-
-    // Constructor-based dependency injection
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
+    @Autowired private ProductRepository productRepository;
 
     @PostMapping
-    public Product createProduct(@RequestBody Product product) {
-        return productService.createProduct(product);
+    public Product addProduct(@RequestBody Product product) {
+        return productRepository.save(product);
     }
 
     @GetMapping
     public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+        return productRepository.findAll();
     }
 
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable Long id) {
-        return productService.getProductById(id);
+        return productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
     }
 
     @PutMapping("/{id}")
-    public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
-        return productService.updateProduct(id, product);
+    public Product updateProduct(@PathVariable Long id, @RequestBody Product productDetails) {
+        Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+        product.setName(productDetails.getName());
+        product.setPrice(productDetails.getPrice());
+        return productRepository.save(product);
     }
 
     @DeleteMapping("/{id}")
-    public boolean deleteProduct(@PathVariable Long id) {
-        return productService.deleteProduct(id);
+    public String deleteProduct(@PathVariable Long id) {
+        productRepository.deleteById(id);
+        return "Product deleted successfully";
     }
 }
