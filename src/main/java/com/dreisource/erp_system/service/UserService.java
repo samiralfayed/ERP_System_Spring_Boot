@@ -1,35 +1,19 @@
 package com.dreisource.erp_system.service;
 
 import com.dreisource.erp_system.model.User;
-import com.dreisource.erp_system.repository.UserRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
 import java.util.Optional;
+import java.util.List;
 
-@Service
-public class UserService {
+public interface UserService {
+    User createUser(User user);
+    List<User> getAllUsers();
+    User findById(Long id);
+    Optional<User> findByUsername(String username);
+    boolean existsByUsername(String username);
+    User updateUser(Long id, User updatedUser);
+    boolean deleteUserById(Long id);
+    void deleteAllUsers();
 
-    private final UserRepository userRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
-
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
-
-    // ✅ Find user by username
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
-
-    // ✅ Check if username exists
-    public boolean existsByUsername(String username) {
-        return userRepository.existsByUsername(username);
-    }
-
-    // ✅ Save user with encrypted password
-    public User saveUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword())); // 🔹 Encrypt password before saving
-        return userRepository.save(user);
-    }
+    // ✅ Add missing saveUser method
+    User saveUser(User user);
 }

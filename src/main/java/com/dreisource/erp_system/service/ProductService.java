@@ -4,9 +4,14 @@ import com.dreisource.erp_system.model.Product;
 import java.util.List;
 
 public interface ProductService {
-    Product createProduct(Product product);
+
+    Product findById(Long id);  // ✅ Add this method to the interface
+
     List<Product> getAllProducts();
-    Product getProductById(Long id);
-    Product updateProduct(Long id, Product product);
+
+    Product createProduct(Product product);
+
+    Product updateProduct(Product product);
+
     boolean deleteProduct(Long id);
 }
