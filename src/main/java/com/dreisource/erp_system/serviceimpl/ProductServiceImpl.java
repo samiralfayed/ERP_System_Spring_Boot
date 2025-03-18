@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
@@ -18,8 +18,9 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product createProduct(Product product) {
-        return productRepository.save(product);
+    public Product findById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found with ID: " + id));
     }
 
     @Override
@@ -28,22 +29,16 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product getProductById(Long id) {
-        Optional<Product> product = productRepository.findById(id);
-        return product.orElse(null);
+    public Product createProduct(Product product) {
+        return productRepository.save(product);
     }
 
     @Override
-    public Product updateProduct(Long id, Product product) {
-        Optional<Product> existingProduct = productRepository.findById(id);
-        if (existingProduct.isPresent()) {
-            Product updatedProduct = existingProduct.get();
-            updatedProduct.setName(product.getName());
-            updatedProduct.setDescription(product.getDescription());
-            updatedProduct.setPrice(product.getPrice());
-            return productRepository.save(updatedProduct);
+    public Product updateProduct(Product product) {
+        if (!productRepository.existsById(product.getId())) {
+            throw new RuntimeException("Product not found");
         }
-        return null;
+        return productRepository.save(product);
     }
 
     @Override

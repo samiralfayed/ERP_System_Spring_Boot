@@ -68,7 +68,9 @@ public class AuthController {
         if (userService.existsByUsername(user.getUsername())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
         }
-        userService.saveUser(user);
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+
+        // ✅ Save the new user
+        User savedUser = userService.saveUser(user);
+        return ResponseEntity.ok(savedUser);
     }
 }

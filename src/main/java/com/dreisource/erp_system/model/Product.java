@@ -10,54 +10,36 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(length = 500)
-    private String description; // Added description field
+    @Column(nullable = false)
+    private double price;
 
     @Column(nullable = false)
-    private Double price;
+    private int stock;
+
+    @Column(nullable = true)
+    private String description;  // ✅ Add description field
 
     public Product() {}
 
-    public Product(String name, String description, Double price) {
+    public Product(String name, double price, int stock, String description) {
         this.name = name;
-        this.description = description;
         this.price = price;
-    }
-
-    // Getters and Setters
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {  // Now available
-        return description;
-    }
-
-    public void setDescription(String description) {
+        this.stock = stock;
         this.description = description;
     }
 
-    public Double getPrice() {
-        return price;
-    }
+    public Long getId() { return id; }
+    public String getName() { return name; }
+    public double getPrice() { return price; }
+    public int getStock() { return stock; }
+    public String getDescription() { return description; }  // ✅ Add getter
 
-    public void setPrice(Double price) {
-        this.price = price;
-    }
+    // ✅ Add setters
+    public void setName(String name) { this.name = name; }
+    public void setPrice(double price) { this.price = price; }
+    public void setStock(int stock) { this.stock = stock; }
+    public void setDescription(String description) { this.description = description; }
 }

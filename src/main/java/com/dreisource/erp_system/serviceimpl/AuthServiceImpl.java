@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class AuthServiceImpl implements AuthService {
+public class AuthServiceImpl implements AuthService {  //  Ensure this matches the file name
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
@@ -27,14 +27,12 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public User registerUser(User user) {
-        // Encrypt the password before saving the user
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
     @Override
     public String loginUser(String username, String password) {
-        // Authenticate the user using Spring Security's AuthenticationManager
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password)
         );
@@ -47,7 +45,6 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String logoutUser(String username) {
-        // For token-based auth (e.g., JWT), logout would typically be handled on the client side.
         return "Logout successful for user: " + username;
     }
 
