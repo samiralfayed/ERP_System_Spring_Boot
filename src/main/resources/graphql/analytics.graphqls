@@ -1,0 +1,44 @@
+scalar DateTime  # ISO 8601-compliant DateTime type
+
+type Analytics {
+    id: ID!
+    title: String!
+    event: String!
+    user: String!
+    timestamp: DateTime!
+    category: String!
+    value: Float!
+    source: String
+    dataType: String
+    analysisResult: String
+    device: String
+    browser: String
+    ipAddress: String
+    location: String
+    deleted: Boolean!
+}
+
+input AnalyticsInput {
+    title: String!
+    event: String!
+    user: String!
+    category: String!
+    value: Float!
+    source: String
+    dataType: String
+    analysisResult: String
+    device: String
+    browser: String
+    ipAddress: String
+    location: String
+}
+
+type Query {
+    getAnalyticsById(id: ID!): Analytics  # Fetch analytics by ID
+    getAnalyticsByCategory(category: String!): [Analytics!]!  # Always returns a non-null list
+    getAllAnalytics: [Analytics!]!  # Fetch all analytics records
+}
+
+type Mutation {
+    addAnalytics(input: AnalyticsInput!): Analytics
+}
