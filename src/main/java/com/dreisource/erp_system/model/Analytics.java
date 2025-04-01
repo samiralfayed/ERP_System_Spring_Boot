@@ -27,9 +27,10 @@ public class Analytics {
     private String location;
     private boolean deleted = false;
 
-    // Constructors
+    // Default Constructor
     public Analytics() {}
 
+    // Full Constructor
     public Analytics(String title, String event, String user, LocalDateTime timestamp, String category, String source,
                      String dataType, Double value, String analysisResult, String device, String browser, String ipAddress, String location) {
         this.title = title;
@@ -45,6 +46,23 @@ public class Analytics {
         this.browser = browser;
         this.ipAddress = ipAddress;
         this.location = location;
+    }
+
+    // Constructor for simplified creation
+    public Analytics(String title, String event, String user, String category, double value) {
+        this.title = title;
+        this.event = event;
+        this.user = user;
+        this.timestamp = LocalDateTime.now(); // Auto-generate timestamp
+        this.category = category;
+        this.source = "Unknown Source";
+        this.dataType = "Unknown DataType";
+        this.value = value;
+        this.analysisResult = "No Analysis";
+        this.device = "Unknown Device";
+        this.browser = "Unknown Browser";
+        this.ipAddress = "0.0.0.0";
+        this.location = "Unknown Location";
     }
 
     // Getters and Setters
