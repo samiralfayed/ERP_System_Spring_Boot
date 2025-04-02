@@ -1,26 +1,22 @@
 package com.dreisource.erp_system.config;
 
-import com.twilio.Twilio;
-import org.springframework.context.annotation.Bean;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@ConfigurationProperties(prefix = "twilio")
 public class TwilioConfig {
+    private String accountSid;
+    private String authToken;
+    private String phoneNumber;
 
-    // Replace these with your actual Twilio credentials
-    private static final String ACCOUNT_SID = "your_account_sid";
-    private static final String AUTH_TOKEN = "your_auth_token";
+    // Getters and Setters
+    public String getAccountSid() { return accountSid; }
+    public void setAccountSid(String accountSid) { this.accountSid = accountSid; }
 
-    @Bean
-    public TwilioInitializer twilioInitializer() {
-        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-        return new TwilioInitializer();
-    }
+    public String getAuthToken() { return authToken; }
+    public void setAuthToken(String authToken) { this.authToken = authToken; }
 
-    // Dummy class to satisfy @Bean return requirement
-    public static class TwilioInitializer {
-        public TwilioInitializer() {
-            System.out.println("Twilio initialized successfully.");
-        }
-    }
+    public String getPhoneNumber() { return phoneNumber; }
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 }
